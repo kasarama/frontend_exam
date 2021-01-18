@@ -13,10 +13,6 @@ function handleHttpErrors(res) {
   return res.json();
 }
 
-const getToken = (token) => {
-  return localStorage.getItem("jwtToken", token);
-};
-
 function userFacade() {
   const addUser = (user, callback) => {
     const options = makeOptions("POST", false, user);
@@ -24,8 +20,6 @@ function userFacade() {
       .then(handleHttpErrors)
       .then((res) => {
         console.log(res);
-        // setWithExpiry("jwtToken", res.token, EXPIRE_TIME);
-        //callback(jwt_decode(res.token));
       });
   };
   const editUser = (user) => {
@@ -33,18 +27,13 @@ function userFacade() {
     return fetch(URL + links.add_user, options).then(handleHttpErrors);
   };
 
-  return { addUser, editUser };
-}
-const setWithExpiry = (key, value, ttl) => {
-  const now = new Date();
-
-  // `item` is an object which contains the original value
-  // as well as the time when it's supposed to expire
-  const item = {
-    value: value,
-    expiry: now.getTime() + ttl,
+  const addContact = (contact) => {
+    const options = makeOptions("POST", true, contact);
+    return fetch(URL + links.add_contact, options).then(handleHttpErrors);
   };
-  localStorage.setItem(key, JSON.stringify(item));
-};
+
+  return { addUser, editUser, addContact };
+}
+
 const facade = userFacade();
 export default facade;

@@ -7,6 +7,7 @@ import Login from "./Login";
 import Profile from "./Profile";
 import Redirect from "./Redirect";
 import Register from "./Register";
+import Sale from "./Sale";
 import {
   BrowserRouter as Router,
   Switch,
@@ -42,6 +43,77 @@ function App() {
   };
   return (
     <Router>
+      <div className="App">
+        <Header activeUser={activeUserName} roles={roles} logout={logout} />
+      </div>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+
+        <Route exact path="/demo">
+          <Demo />
+        </Route>
+        <Route exact path="/sale">
+          <Sale />
+        </Route>
+
+        {admin ? (
+          <Route exact path="/admin">
+            <Admin />
+          </Route>
+        ) : (
+          ""
+        )}
+        {user || admin ? (
+          ""
+        ) : (
+          <Route exact path="/login">
+            <Login checkActive={checkActive} />
+          </Route>
+        )}
+        {user || admin ? (
+          ""
+        ) : (
+          <Route exact path="/register">
+            <Register checkActive={checkActive} />
+          </Route>
+        )}
+        {user || admin ? (
+          <Route exact path="/profile">
+            <Profile />
+          </Route>
+        ) : (
+          ""
+        )}
+        {user || admin ? (
+          <Route exact path="/redirect">
+            <Redirect logout={logout} />
+          </Route>
+        ) : (
+          ""
+        )}
+        <Route>
+          <NoMatch />
+        </Route>
+      </Switch>
+    </Router>
+  );
+}
+function NoMatch() {
+  let location = useLocation();
+
+  return (
+    <div>
+      <h3>
+        No match for <code>{location.pathname}</code>
+      </h3>
+    </div>
+  );
+}
+export default App;
+/*
+<Router>
       <div className="App">
         <Header activeUser={activeUserName} roles={roles} logout={logout} />
       </div>
@@ -93,6 +165,46 @@ function App() {
       </Switch>
     </Router>
   );
+*/
+
+/*
+<Router>
+      <div className="App">
+        <Header activeUser={activeUserName} roles={roles} logout={logout} />
+      </div>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+
+        <Route exact path="/demo">
+          <Demo />
+        </Route>
+
+        <Route exact path="/admin">
+          <Admin />
+        </Route>
+
+        <Route exact path="/login">
+          <Login checkActive={checkActive} />
+        </Route>
+        <Route exact path="/register">
+          <Register checkActive={checkActive} />
+        </Route>
+
+        <Route exact path="/profile">
+          <Profile />
+        </Route>
+        <Route exact path="/redirect">
+          <Redirect logout={logout} />
+        </Route>
+
+        <Route>
+          <NoMatch />
+        </Route>
+      </Switch>
+    </Router>
+  );
 }
 function NoMatch() {
   let location = useLocation();
@@ -104,6 +216,4 @@ function NoMatch() {
         No match for <code>{location.pathname}</code>
       </h3>
     </div>
-  );
-}
-export default App;
+    */
