@@ -1,0 +1,141 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loginContainer {
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 3px;
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  transform: translate(-50%, 0%);
+  width: 450px;
+  height: 350px;
+  align-items: center;
+}
+.loginHeader {
+  margin: auto;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+}
+.button {
+  border: none;
+  outline: none;
+
+  color: white;
+  width: 250px;
+  background-color: #bdba11;
+  border-radius: 100px;
+  height: 50px;
+  margin-top: 4%;
+  margin-bottom: 14%;
+}
+.button:hover {
+  background-color: #aa8505;
+}
+
+.buttonSmall {
+  border: none;
+  outline: none;
+
+  color: white;
+  width: 100px;
+  background-color: #bdba11;
+  border-radius: 100px;
+  height: 35px;
+  margin-top: 4%;
+  margin-bottom: 14%;
+}
+.buttonSmall:hover {
+  background-color: #aa8505;
+}
+
+.input {
+  outline: none;
+
+  color: #74720c;
+  width: 250px;
+  background-color: white;
+  border-radius: 10px;
+  height: 50px;
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+.input:hover {
+  background-color: #bdba1127;
+}
+
+.loader {
+  border: 8px solid #701981;
+  border-radius: 50%;
+  border-top: 3px solid #684662;
+  width: 60px;
+  height: 35px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.headerr {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  background-color: #333;
+}
