@@ -95,13 +95,11 @@ export default function Sale() {
             </button>
             {loading ? loader : msg}
             <div className="row">
-              <div className="col-md-9">
-                <ul style={{ listStyleType: "none" }}>{list}</ul>
-              </div>
-              <div className="col-md-3" style={{ backgroundColor: "#e7e572" }}>
+              
+              <div className="col-md-4" style={{ backgroundColor: "#e7e572" }}>
                 <Switch>
                   <Route exact path={path}>
-                    <h3>Please select a contact.</h3>
+                    Details
                   </Route>
                   <Route exact path="/sale/:contactID">
                     <Contact
@@ -111,6 +109,8 @@ export default function Sale() {
                     />
                   </Route>
                 </Switch>
+              </div><div className="col-md-8">
+                <ul style={{ listStyleType: "none" }}>{list}</ul>
               </div>
             </div>
             <div className="row"></div>
