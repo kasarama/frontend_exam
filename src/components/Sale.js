@@ -1,8 +1,19 @@
 import { useEffect, useState } from "react";
 import AddContact from "./AddContact";
 import ContactList from "./ContactList";
+import Contact from "./Contact";
 import userFacade from "../facades/userFacade";
+
+import {
+  Switch,
+  BrowserRouter as Router,
+  Route,
+  Link,
+  useRouteMatch,
+} from "react-router-dom";
+
 export default function Sale() {
+  const [contactiID, setID] = useState(null);
   const initContactList = [
     { name: "abc", id: 21 },
     { name: "xyz", id: 2 },
@@ -13,6 +24,7 @@ export default function Sale() {
   const [render, setRender] = useState(false);
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [arrCOntacts, setArr] = useState([]);
 
   const loader = (
     <div
@@ -25,6 +37,7 @@ export default function Sale() {
       <div className="loader"></div>
     </div>
   );
+  let { path, url } = useRouteMatch();
 
   useEffect(() => {
     let mounted = true;
@@ -32,7 +45,9 @@ export default function Sale() {
       userFacade
         .usersContacts()
         .then((res) => {
-          setList(<ContactList list={res} />);
+          setList(<ContactList list={res} setID={setID} />);
+          setArr(res.map((e) => e));
+          console.log(arrCOntacts);
         })
         .then(() => {
           if (mounted) {
@@ -80,9 +95,22 @@ export default function Sale() {
             </button>
             {loading ? loader : msg}
             <div className="row">
-              <div className="col-md-9">{list}</div>
+              <div className="col-md-9">
+                <ul style={{ listStyleType: "none" }}>{list}</ul>
+              </div>
               <div className="col-md-3" style={{ backgroundColor: "#e7e572" }}>
-                {"DETAILS"}
+                <Switch>
+                  <Route exact path={path}>
+                    <h3>Please select a contact.</h3>
+                  </Route>
+                  <Route exact path="/sale/:contactID">
+                    <Contact
+                      initialContact={arrCOntacts.find(
+                        (e) => e.id === contactiID
+                      )}
+                    />
+                  </Route>
+                </Switch>
               </div>
             </div>
             <div className="row"></div>

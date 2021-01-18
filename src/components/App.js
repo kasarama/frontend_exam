@@ -51,15 +51,15 @@ function App() {
           <Home />
         </Route>
 
-        <Route exact path="/demo">
+        <Route path="/demo">
           <Demo />
         </Route>
-        <Route exact path="/sale">
+        <Route path="/sale">
           <Sale />
         </Route>
 
         {admin ? (
-          <Route exact path="/admin">
+          <Route path="/admin">
             <Admin />
           </Route>
         ) : (
@@ -68,26 +68,26 @@ function App() {
         {user || admin ? (
           ""
         ) : (
-          <Route exact path="/login">
+          <Route path="/login">
             <Login checkActive={checkActive} />
           </Route>
         )}
         {user || admin ? (
           ""
         ) : (
-          <Route exact path="/register">
+          <Route path="/register">
             <Register checkActive={checkActive} />
           </Route>
         )}
         {user || admin ? (
-          <Route exact path="/profile">
+          <Route path="/profile">
             <Profile />
           </Route>
         ) : (
           ""
         )}
         {user || admin ? (
-          <Route exact path="/redirect">
+          <Route path="/redirect">
             <Redirect logout={logout} />
           </Route>
         ) : (
@@ -113,23 +113,25 @@ function NoMatch() {
 }
 export default App;
 /*
-<Router>
+
+  <Router>
       <div className="App">
         <Header activeUser={activeUserName} roles={roles} logout={logout} />
       </div>
       <Switch>
-        <Route exact path="/">
+        <Route   path="/">
           <Home />
         </Route>
-        {user ? (
-          <Route exact path="/demo">
-            <Demo />
-          </Route>
-        ) : (
-          ""
-        )}
+
+        <Route   path="/demo">
+          <Demo />
+        </Route>
+        <Route   path="/sale">
+          <Sale />
+        </Route>
+
         {admin ? (
-          <Route exact path="/admin">
+          <Route   path="/admin">
             <Admin />
           </Route>
         ) : (
@@ -138,24 +140,28 @@ export default App;
         {user || admin ? (
           ""
         ) : (
-          <>
-            <Route exact path="/login">
-              <Login checkActive={checkActive} />
-            </Route>
-            <Route exact path="/register">
-              <Register checkActive={checkActive} />
-            </Route>
-          </>
+          <Route   path="/login">
+            <Login checkActive={checkActive} />
+          </Route>
         )}
         {user || admin ? (
-          <>
-            <Route exact path="/profile">
-              <Profile />
-            </Route>
-            <Route exact path="/redirect">
-              <Redirect logout={logout} />
-            </Route>
-          </>
+          ""
+        ) : (
+          <Route   path="/register">
+            <Register checkActive={checkActive} />
+          </Route>
+        )}
+        {user || admin ? (
+          <Route   path="/profile">
+            <Profile />
+          </Route>
+        ) : (
+          ""
+        )}
+        {user || admin ? (
+          <Route   path="/redirect">
+            <Redirect logout={logout} />
+          </Route>
         ) : (
           ""
         )}
@@ -164,56 +170,5 @@ export default App;
         </Route>
       </Switch>
     </Router>
-  );
+
 */
-
-/*
-<Router>
-      <div className="App">
-        <Header activeUser={activeUserName} roles={roles} logout={logout} />
-      </div>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-
-        <Route exact path="/demo">
-          <Demo />
-        </Route>
-
-        <Route exact path="/admin">
-          <Admin />
-        </Route>
-
-        <Route exact path="/login">
-          <Login checkActive={checkActive} />
-        </Route>
-        <Route exact path="/register">
-          <Register checkActive={checkActive} />
-        </Route>
-
-        <Route exact path="/profile">
-          <Profile />
-        </Route>
-        <Route exact path="/redirect">
-          <Redirect logout={logout} />
-        </Route>
-
-        <Route>
-          <NoMatch />
-        </Route>
-      </Switch>
-    </Router>
-  );
-}
-function NoMatch() {
-  let location = useLocation();
-  console.log("NOMATCH");
-
-  return (
-    <div>
-      <h3>
-        No match for <code>{location.pathname}</code>
-      </h3>
-    </div>
-    */

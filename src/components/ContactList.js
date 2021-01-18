@@ -1,8 +1,15 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import {
+  Switch,
+  BrowserRouter as Router,
+  Route,
+  Link,
+  useRouteMatch,
+} from "react-router-dom";
+export default function ContactList({ list, setID }) {
+  let { path, url } = useRouteMatch();
 
-export default function ContactList({ list }) {
   function sortByID() {
-    console.log(list);
     function compare(a, b) {
       return a.id - b.id;
     }
@@ -19,28 +26,38 @@ export default function ContactList({ list }) {
     let contacts = [];
     list.forEach((element) => {
       contacts.push(
-        <div
+        <li
           key={element.id}
-          id={element.id}
-          className="col-md-3 col-sm-6"
-          onClick={(e) => showDetails}
-          style={{ padding: 15, border: "solid" }}
+          onClick={(e) => {
+            e.preventDefault();
+            setID(element.id);
+          }}
         >
-          <table className="table table-sm" key={element.id + "contact"}>
-            <thead>
-              <tr>
-                <th scope="col">{element.company}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{element.name}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          <Link to={url + "/" + element.id}>
+            <div
+              key={element.id}
+              id={element.id}
+              className="col-md-3 col-sm-6"
+              style={{ padding: 15 }}
+            >
+              <table className="table table-sm" key={element.id + "contact"}>
+                <thead>
+                  <tr>
+                    <th scope="col">{element.company}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{element.name}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </Link>
+        </li>
       );
     });
+
     return contacts;
   }
   const [table, setTable] = useState(makeTable(sortByID));
