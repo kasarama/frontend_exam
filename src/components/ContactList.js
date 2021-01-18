@@ -8,22 +8,35 @@ export default function ContactList({ list }) {
     }
     console.log(list.sort(compare));
   }
+
+  const showDetails = (e) => {
+    e.preventDefault();
+    console.log(e.currentTarget.id);
+  };
+
   function makeTable(sortingType) {
     sortingType();
     let contacts = [];
     list.forEach((element) => {
       contacts.push(
-        <div className="col-md-1 col-sm-6">
+        <div
+          key={element.id}
+          id={element.id}
+          className="col-md-3 col-sm-6"
+          onClick={(e) => showDetails}
+          style={{ padding: 15, border: "solid" }}
+        >
           <table className="table table-sm" key={element.id + "contact"}>
             <thead>
               <tr>
-                <th scope="col">{element.name}</th>
+                <th scope="col">{element.company}</th>
               </tr>
             </thead>
-            <tbody></tbody>
-            <tr>
-              <td>{element.name}</td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>{element.name}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       );

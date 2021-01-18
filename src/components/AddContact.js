@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import userFacade from "../facades/userFacade";
 import Contact from "./Contact";
-export default function AddContact() {
+export default function AddContact({ render }) {
   const [contactCredantial, setCCredantial] = useState({
     name: "",
     email: "",
@@ -61,6 +61,7 @@ export default function AddContact() {
           if (mounted) {
             setMsg("Contact added");
             setLoading(false);
+            render(true);
           }
         })
         .catch((err) => {

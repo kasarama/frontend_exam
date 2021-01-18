@@ -31,8 +31,12 @@ function userFacade() {
     const options = makeOptions("POST", true, contact);
     return fetch(URL + links.add_contact, options).then(handleHttpErrors);
   };
+  const usersContacts = () => {
+    const options = makeOptions("GET", true);
+    return fetch(URL + links.users_contacts, options).then(handleHttpErrors);
+  };
 
-  return { addUser, editUser, addContact };
+  return { addUser, editUser, addContact, usersContacts };
 }
 
 const facade = userFacade();
