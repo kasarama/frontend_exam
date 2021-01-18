@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import userFacade from "../facades/userFacade";
 
 export default function Contact({ initialContact }) {
-  let rendered = true;
+  const [startDelete, setStartDelete] = useState(false);
   const [contact, setContact] = useState(initialData());
   const [doEdit, setDoEdit] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,6 @@ export default function Contact({ initialContact }) {
   function initialData() {
     let data = initialContact;
     if (initialContact === undefined) {
-      rendered = false;
       data = {
         name: "",
         email: "",
@@ -88,6 +87,7 @@ export default function Contact({ initialContact }) {
             console.log("Network error!");
           }
           setLoading(false);
+          setDoEdit(false);
         });
       return function cleanUp() {
         mounted = false;
@@ -95,6 +95,45 @@ export default function Contact({ initialContact }) {
       };
     }
   }, [startEdit]);
+
+  useEffect(() => {
+    let mounted = true;
+    if (startDelete) {
+      console.log("using effectof stardelete");
+      userFacade
+        .deleteContact(contact.id)
+        .then((res) => setMsg(res.msg))
+        .then(() => {
+          if (mounted) {
+            setMsg("Contact deleted");
+            setLoading(false);
+            setContact({
+              name: "",
+              email: "",
+              company: "",
+              jobtitle: "",
+              phone: "",
+              created: "",
+              id: -1,
+            });
+          }
+        })
+        .catch((err) => {
+          if (err.status) {
+            err.fullError.then((e) => setMsg(e.message));
+          } else {
+            setMsg("Network error has occurred:");
+            console.log("Network error!");
+          }
+          setLoading(false);
+          setStartDelete(false);
+        });
+      return function cleanUp() {
+        mounted = false;
+        setStartDelete(false);
+      };
+    }
+  }, [startDelete]);
 
   return (
     <div className="container-fluid">
@@ -139,6 +178,7 @@ export default function Contact({ initialContact }) {
                 style={{ backgroundColor: "#bdba11" }}
                 onClick={(e) => {
                   e.preventDefault();
+                  setMsg("processing...");
                   setDoEdit(true);
                 }}
               >
@@ -149,11 +189,14 @@ export default function Contact({ initialContact }) {
                 style={{ backgroundColor: "#bdba11" }}
                 onClick={(e) => {
                   e.preventDefault();
-                  setDoEdit(true);
+                  setMsg("processing...");
+
+                  setStartDelete(true);
                 }}
               >
-                click to edit
+                Click to delete
               </button>
+              {loading ? loader : "  " + msg}
             </div>
           ) : (
             <div>

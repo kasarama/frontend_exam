@@ -13,7 +13,6 @@ export default function ContactList({ list, setID }) {
     function compare(a, b) {
       return a.id - b.id;
     }
-    console.log(list.sort(compare));
   }
 
   const showDetails = (e) => {

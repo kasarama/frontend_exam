@@ -49,7 +49,6 @@ export default function Sale() {
         .then((res) => {
           setList(<ContactList list={res} setID={setID} />);
           setArr(res.map((e) => e));
-          console.log(arrCOntacts);
         })
         .then(() => {
           if (mounted) {
