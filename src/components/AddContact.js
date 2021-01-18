@@ -13,8 +13,8 @@ export default function AddContact({ render }) {
   });
   const [msg, setMsg] = useState("");
   const [startAdding, setStartAdding] = useState(false);
+  const [addedContact, setAddedContact] = useState("");
   const [loading, setLoading] = useState(false);
-  const [addedContact, setAddedContact] = useState(" =.=");
 
   const loader = (
     <div

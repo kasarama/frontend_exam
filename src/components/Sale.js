@@ -3,6 +3,7 @@ import AddContact from "./AddContact";
 import ContactList from "./ContactList";
 import Contact from "./Contact";
 import userFacade from "../facades/userFacade";
+import { useHistory } from "react-router-dom";
 
 import {
   Switch,
@@ -38,6 +39,7 @@ export default function Sale() {
     </div>
   );
   let { path, url } = useRouteMatch();
+  const history = useHistory();
 
   useEffect(() => {
     let mounted = true;
@@ -87,6 +89,7 @@ export default function Sale() {
               style={{ backgroundColor: "#bdba11" }}
               onClick={(e) => {
                 e.preventDefault();
+                history.push("/sale");
                 setRender(true);
                 setLoading(true);
               }}
@@ -95,7 +98,6 @@ export default function Sale() {
             </button>
             {loading ? loader : msg}
             <div className="row">
-              
               <div className="col-md-4" style={{ backgroundColor: "#e7e572" }}>
                 <Switch>
                   <Route exact path={path}>
@@ -109,7 +111,8 @@ export default function Sale() {
                     />
                   </Route>
                 </Switch>
-              </div><div className="col-md-8">
+              </div>
+              <div className="col-md-8">
                 <ul style={{ listStyleType: "none" }}>{list}</ul>
               </div>
             </div>

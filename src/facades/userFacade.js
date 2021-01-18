@@ -36,7 +36,23 @@ function userFacade() {
     return fetch(URL + links.users_contacts, options).then(handleHttpErrors);
   };
 
-  return { addUser, editUser, addContact, usersContacts };
+  const editContact = (contact) => {
+    const options = makeOptions("PUT", true, contact);
+    return fetch(URL + links.edit_contact, options).then(handleHttpErrors);
+  };
+  const deleteContact = (id) => {
+    const options = makeOptions("DELETE", true, id);
+    return fetch(URL + links.delete_contatc, options).then(handleHttpErrors);
+  };
+
+  return {
+    addUser,
+    editUser,
+    addContact,
+    usersContacts,
+    editContact,
+    deleteContact,
+  };
 }
 
 const facade = userFacade();
