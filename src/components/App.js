@@ -6,6 +6,7 @@ import Demo from "./Demo";
 import Login from "./Login";
 import Profile from "./Profile";
 import Redirect from "./Redirect";
+import Register from "./Register";
 import {
   BrowserRouter as Router,
   Switch,
@@ -49,14 +50,14 @@ function App() {
           <Home />
         </Route>
         {user ? (
-          <Route path="/demo">
+          <Route exact path="/demo">
             <Demo />
           </Route>
         ) : (
           ""
         )}
         {admin ? (
-          <Route path="/admin">
+          <Route exact path="/admin">
             <Admin />
           </Route>
         ) : (
@@ -65,23 +66,27 @@ function App() {
         {user || admin ? (
           ""
         ) : (
-          <Route path="/login">
-            <Login checkActive={checkActive} />
-          </Route>
+          <>
+            <Route exact path="/login">
+              <Login checkActive={checkActive} />
+            </Route>
+            <Route exact path="/register">
+              <Register checkActive={checkActive} />
+            </Route>
+          </>
         )}
         {user || admin ? (
           <>
-            <Route path="/profile">
+            <Route exact path="/profile">
               <Profile />
             </Route>
-            <Route path="/redirect">
+            <Route exact path="/redirect">
               <Redirect logout={logout} />
             </Route>
           </>
         ) : (
           ""
         )}
-
         <Route>
           <NoMatch />
         </Route>
@@ -91,6 +96,7 @@ function App() {
 }
 function NoMatch() {
   let location = useLocation();
+  console.log("NOMATCH");
 
   return (
     <div>

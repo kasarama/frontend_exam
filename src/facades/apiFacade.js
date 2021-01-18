@@ -64,6 +64,7 @@ function apiFacade() {
     login,
     loggedIn,
     logout,
+    makeOptions,
   };
 }
 
