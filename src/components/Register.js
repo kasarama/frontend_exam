@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import apiFacade from "../facades/apiFacade";
-
-export default function Login({ checkActive }) {
+import userFacade from "../facades/userFacade";
+export default function Register({ checkActive }) {
   const history = useHistory();
   const [msg, setMsg] = useState(" ");
+  const [loading, setLoading] = useState(false);
+  const [startRegister, setStartRegister] = useState(false);
+  const [token, setToken] = useState("token");
+
   const [loginCredentials, setLoginCredentials] = useState({
     username: "",
     password: "",
   });
-  const [token, setToken] = useState("token");
-  const [startLogin, setStartLogin] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [startRedirect, setRedirect] = useState(false);
-
+  const [password2, setPass2] = useState("");
   const loader = (
     <div
       style={{
@@ -27,7 +26,6 @@ export default function Login({ checkActive }) {
   );
 
   const onChange = (event) => {
-    setStartLogin(false);
     event.preventDefault();
     setLoginCredentials({
       ...loginCredentials,
@@ -35,44 +33,43 @@ export default function Login({ checkActive }) {
     });
     setMsg("");
   };
-
-  const onLogin = (event) => {
+  const onChange2 = (event) => {
     event.preventDefault();
+    setPass2(event.target.value);
+    setMsg("");
+  };
+
+  const onRegister = (e) => {
+    e.preventDefault();
     if (loginCredentials.username.length < 1) {
       setMsg("username is missng");
     } else if (loginCredentials.password.length < 1) {
       setMsg("password is missing");
+    } else if (password2.length < 1) {
+      setMsg("password is missing");
+    } else if (password2 != loginCredentials.password) {
+      setMsg("passwords differ, try again");
     } else {
       setLoading(true);
-      setStartLogin(true);
+      setStartRegister(true);
     }
   };
 
-  function redirect() {
-    let roles = token.roles;
-    if (token != "token") {
-      if (roles.includes("user") & roles.includes("admin")) {
-        history.push("/redirect");
-      } else if (roles.includes("user")) {
-        history.push("/profile");
-      } else if (roles.includes("admin")) {
-        history.push("/admin");
-      }
-    }
-  }
-
   useEffect(() => {
     let mounted = true;
-    if (startLogin) {
-      apiFacade
-        .login(loginCredentials, setToken)
+    if (startRegister) {
+      userFacade
+        .addUser(loginCredentials, setToken)
         .then(() => {
           if (mounted) {
-            const loggedIn = apiFacade.loggedIn();
-            setMsg("Welcome, " + loggedIn.username);
             setLoading(false);
             checkActive(true);
-            setRedirect(!startRedirect);
+
+            setMsg("Welcome on board,");
+
+            setTimeout(() => {
+              history.push("/profile");
+            }, 1000 * 3);
           }
         })
         .catch((err) => {
@@ -84,17 +81,8 @@ export default function Login({ checkActive }) {
           }
           setLoading(false);
         });
-
-      return function cleanUp() {
-        mounted = false;
-        setStartLogin(false);
-      };
     }
-  }, [startLogin]);
-
-  useEffect(() => {
-    redirect();
-  }, [startRedirect]);
+  }, [startRegister]);
 
   return (
     <div className="loginContainer">
@@ -113,22 +101,17 @@ export default function Login({ checkActive }) {
           placeholder="password"
           onChange={onChange}
         ></input>
+        <input
+          className="input"
+          type="password"
+          id="password2"
+          placeholder="repeat password"
+          onChange={onChange2}
+        ></input>
         <div className="loginHeader">{loading ? loader : msg}</div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {" "}
-        <button className="button" onClick={onLogin}>
-          Log in
-        </button>
-      </div>
+
       <div>
-        <div className="loginHeader">Not an user yet?</div>
         <div
           style={{
             display: "flex",
@@ -136,7 +119,7 @@ export default function Login({ checkActive }) {
             alignItems: "center",
           }}
         >
-          <button className="button" onClick={() => history.push("/register")}>
+          <button className="button" onClick={(e) => onRegister(e)}>
             Register
           </button>
         </div>

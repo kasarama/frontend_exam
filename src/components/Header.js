@@ -18,6 +18,11 @@ export default function Header({ activeUser, roles, logout }) {
                 HOME
               </NavLink>
             </li>
+            <li>
+                <NavLink activeClassName="active" to="/sale">
+                 Sale
+                </NavLink>
+              </li>
             {admin || user ? (
               ""
             ) : (

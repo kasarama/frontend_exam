@@ -64,6 +64,7 @@ function apiFacade() {
     login,
     loggedIn,
     logout,
+    makeOptions,
   };
 }
 
@@ -75,8 +76,12 @@ function handleHttpErrors(res) {
   return res.json();
 }
 
-const getToken = (token) => {
-  return localStorage.getItem("jwtToken", token);
+const getToken = () => {
+  const tokenString = localStorage.getItem("jwtToken");
+  const tokenItem = JSON.parse(tokenString);
+  const token = tokenItem.value;
+
+  return token;
 };
 
 //https://www.sohamkamani.com/blog/javascript-localstorage-with-ttl-expiry/

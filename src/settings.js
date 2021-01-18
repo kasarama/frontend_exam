@@ -6,6 +6,8 @@ function URL() {
     add_user: "user/add",
     edit_user: "logi/edit",
     delete_user: "admin/deleteuser/",
+    add_contact: "contact/addcontact",
+    users_contacts: "contact/userscontacts",
   };
 }
 const url = URL();
